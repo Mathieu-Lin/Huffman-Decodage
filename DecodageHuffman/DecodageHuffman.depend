@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1713257607 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.c
+	"file_reader.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1713257633 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.h
+
+1713536919 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\main.c
+	<stdio.h>
+	<stdlib.h>
+	"file_reader.h"
+	"node.h"
+	"list_node.h"
+
+1713537134 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.c
+	"node.h"
+	"file_reader.h"
+	"list_node.h"
+	<stdio.h>
+	<stdlib.h>
+
+1713537059 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.h
+
+1713526371 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\list_node.h
+

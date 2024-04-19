@@ -31,9 +31,18 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="file_reader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="file_reader.h" />
+		<Unit filename="list_node.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="node.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="node.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
