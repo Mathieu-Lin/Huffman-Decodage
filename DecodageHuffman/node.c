@@ -174,7 +174,7 @@ void afficherArbre(Node *racine, int niveau) {
     }
 
     // Afficher le nœud actuel
-    printf("(%c, %d)\n", racine->lettre, racine->freq);
+    printf("(%c, %d, %c)\n", racine->lettre, racine->freq, racine->code_binaire);
 
     // Afficher le sous-arbre gauche
     afficherArbre(racine->left, niveau + 1);

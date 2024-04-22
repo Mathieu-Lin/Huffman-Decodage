@@ -3,6 +3,7 @@
 #include "file_reader.h"
 #include "node.h"
 #include "list_node.h"
+#include "encodage.h"
 
 int main() {
 
@@ -14,7 +15,7 @@ int main() {
     DictionnaireFreq *dict = NULL;
 
     // Lecture du fichier .txt
-    lireTxt("exemple_freq.txt", &dict);
+    lireTxt("alice_freq.txt", &dict);
 
     // Affichage du dictionnaire
     afficherListe(dict);
@@ -44,5 +45,29 @@ int main() {
     printf("\nArbre de Huffman :\n");
     afficherArbre(racineArbre, 0);
 
+    /*********************************************************************************************/
+    /* PARTIE 3 :  Décodage du texte comprimé */
+    /*********************************************************************************************/
+    // Lecture fichier .bin
+    char *octet = lireBin("alice_comp.bin");
+    if (octet == NULL) {
+        printf("Erreur lors de la lecture du fichier binaire.\n");
+    }
+
+    // Afficher chaque caractère de la chaîne de caractères binaire
+    printf("Fichier binaire : ");
+    for (int i = 0; octet[i] != '\0'; ++i) {
+        printf("%c", octet[i]);
+    }
+    printf("\n");
+
+    char* binaire = stringToBinary(octet);
+    printf("Résultat binaire : %s\n", binaire);
+
+    // Décoder la chaîne binaire en utilisant l'arbre de Huffman
+    printf("Texte décodé : ");
+    decoderHuffman(racineArbre, binaire);
+
+    // Corriger pour que saut soit accepté
     return 0;
 }

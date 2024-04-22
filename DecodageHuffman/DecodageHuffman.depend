@@ -7,14 +7,15 @@
 
 1713257633 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.h
 
-1713536919 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\main.c
+1713786827 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\main.c
 	<stdio.h>
 	<stdlib.h>
 	"file_reader.h"
 	"node.h"
 	"list_node.h"
+	"encodage.h"
 
-1713537134 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.c
+1713781646 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.c
 	"node.h"
 	"file_reader.h"
 	"list_node.h"
@@ -24,4 +25,13 @@
 1713537059 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.h
 
 1713526371 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\list_node.h
+
+1713786809 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\encodage.h
+
+1713786802 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\encodage.c
+	"node.h"
+	"encodage.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
 

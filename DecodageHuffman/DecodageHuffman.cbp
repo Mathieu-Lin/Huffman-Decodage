@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="encodage.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="encodage.h" />
 		<Unit filename="file_reader.c">
 			<Option compilerVar="CC" />
 		</Unit>
