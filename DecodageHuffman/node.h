@@ -7,7 +7,7 @@ typedef struct Node {
     int freq;             // Fréquence du caractère
     struct Node *left;    // Pointeur vers le sous-arbre gauche
     struct Node *right;   // Pointeur vers le sous-arbre droit
-    char *code_binaire;   // Code binaire attribué au caractère
+    char speciale;
 } Node;
 
 typedef struct List_Node{

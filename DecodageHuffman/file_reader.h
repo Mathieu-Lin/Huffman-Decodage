@@ -1,6 +1,8 @@
 #ifndef FILE_READER_H
 #define FILE_READER_H
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 // Structure pour une paire de clé-valeur sous une liste chainée
 typedef struct DictionnaireFreq {
     char* cle;
@@ -8,12 +10,19 @@ typedef struct DictionnaireFreq {
     struct DictionnaireFreq *suiv;
 } DictionnaireFreq;
 
+// Structure pour avoir un couple bin + longueur.
+typedef struct CoupleBinLong {
+    char* chaine;
+    size_t longueur;
+}CoupleBinLong;
+
+
 /** Lecture **/
 // Fonction pour lire un fichier texte
 void lireTxt (const char* fichier, DictionnaireFreq** dict);
 
 // Fonction pour lire un fichier binaire
-char * lireBin (const char* fichier);
+CoupleBinLong lireBin(const char* fichier);
 
 /** GestionDico **/
 // Fonction pour libérer la mémoire allouée pour la liste chainée
@@ -37,5 +46,6 @@ void retirerPremier(DictionnaireFreq **tete);
 // Fonction pour ajouter un élément dans la liste chainée
 void ajouterElement(DictionnaireFreq **tete, const char *cle, const char *valeur);
 
+int longueurChaine(const char* chaine);
 #endif
 

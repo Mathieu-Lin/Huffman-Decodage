@@ -13,7 +13,7 @@ Node *creerNode(char lettre, int freq) {
         nouvNode->freq = freq;
         nouvNode->left = NULL;
         nouvNode->right = NULL;
-        nouvNode->code_binaire = NULL; // Initialise le code binaire à NULL
+        nouvNode->speciale = NULL; //Initialise le code binaire à NULL
     }
     return nouvNode;
 }
@@ -26,7 +26,33 @@ Node *creerNode2(char lettre, int freq, Node *gauche, Node *droite) {
         nouvNode->freq = freq;
         nouvNode->left = gauche;
         nouvNode->right = droite;
-        nouvNode->code_binaire = NULL; // Initialise le code binaire à NULL
+        nouvNode->speciale = NULL; // Initialise le code binaire à NULL
+    }
+    return nouvNode;
+}
+
+// Créer un nœud de l'arbre de Huffman
+Node *creerNode3(char lettre, int freq, char speciale) {
+    Node *nouvNode = (Node *)malloc(sizeof(Node));
+    if (nouvNode != NULL) {
+        nouvNode->lettre = lettre;
+        nouvNode->freq = freq;
+        nouvNode->left = NULL;
+        nouvNode->right = NULL;
+        nouvNode->speciale = speciale;
+    }
+    return nouvNode;
+}
+
+// Créer un nœud de l'arbre de Huffman avec les nœuds gauche et droit
+Node *creerNode4(char lettre, int freq, Node *gauche, Node *droite, char speciale) {
+    Node *nouvNode = (Node *)malloc(sizeof(Node));
+    if (nouvNode != NULL) {
+        nouvNode->lettre = lettre;
+        nouvNode->freq = freq;
+        nouvNode->left = gauche;
+        nouvNode->right = droite;
+        nouvNode->speciale = speciale;
     }
     return nouvNode;
 }
@@ -43,11 +69,22 @@ List_Node *convertirEnListeNode(DictionnaireFreq *dict) {
         List_Node *nouveauNode = (List_Node *)malloc(sizeof(List_Node));
         if (nouveauNode != NULL) {
             // Copier les données de DictionnaireFreq vers List_Node
-            nouveauNode->node.lettre = *(dict->cle) ;
-            nouveauNode->node.freq = *(dict->valeur) -48;
+            if (strcmp(dict->cle, "Saut") == 0) {
+                nouveauNode->node.lettre = 'W';  // Si la clé est "Saut", utiliser '\n' comme caractère
+                nouveauNode->node.speciale = 'S';
+            } else {
+                nouveauNode->node.lettre = *(dict->cle);  // Sinon, utiliser la première lettre comme caractère
+                nouveauNode->node.speciale = '\0';
+            }
+
+            // Convertir la valeur de la fréquence en entier
+            int frequence = atoi(dict->valeur);
+
+            // Attribuer cette valeur au nœud
+            nouveauNode->node.freq = frequence;
             nouveauNode->node.left = NULL;
             nouveauNode->node.right = NULL;
-            nouveauNode->node.code_binaire = NULL;
+
 
             // Mettre à jour les pointeurs de la liste
             nouveauNode->suiv = NULL;
@@ -148,8 +185,17 @@ Node *buildTree(List_Node *tete) {
 
         // Créer un nœud parent avec ses deux nœuds fils
         Node *parent = creerNode('\0', left->freq + right->freq);
-        parent->left = creerNode2(left->lettre, left->freq,left->left, left->right);
-        parent->right = creerNode2(right->lettre, right->freq, right->left, right->right);
+        if (left->speciale != NULL) {
+            parent->left = creerNode4(left->lettre, left->freq,left->left, left->right,left->speciale);
+        } else {
+            parent->left = creerNode2(left->lettre, left->freq,left->left, left->right);
+        }
+        if (right->speciale != NULL){
+            parent->right = creerNode4(right->lettre, right->freq, right->left, right->right,right->speciale);
+        }else {
+            parent->right = creerNode2(right->lettre, right->freq, right->left, right->right);
+        }
+
         // Retirer les deux nœuds avec les fréquences les plus faibles
         retirerPremierNodes(&tete);
         retirerPremierNodes(&tete);
@@ -174,7 +220,7 @@ void afficherArbre(Node *racine, int niveau) {
     }
 
     // Afficher le nœud actuel
-    printf("(%c, %d, %c)\n", racine->lettre, racine->freq, racine->code_binaire);
+    printf("(%c, %d, %c)\n", racine->lettre, racine->freq, racine->speciale);
 
     // Afficher le sous-arbre gauche
     afficherArbre(racine->left, niveau + 1);

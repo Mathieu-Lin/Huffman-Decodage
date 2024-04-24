@@ -1,8 +1,73 @@
-#include "file_reader.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "file_reader.h"
 
+
+#define TAILLE_BLOC 1024 // Taille du bloc de lecture
+
+
+    // Fonction pour lire le fichier .bin compressé
+CoupleBinLong lireBin(const char* fichier) {
+    // Déclaration de la structure CoupleBinLong
+    CoupleBinLong couple;
+
+    // Stockage du chemin
+    char chemin[512];
+    snprintf(chemin, sizeof(chemin), "%s%s", "../../../Data/Compressed_data/", fichier);
+    FILE* fich = fopen(chemin, "rb"); // Ouverture du fichier en mode binaire
+
+    // Si fichier inexistant :
+    if (fich == NULL) {
+        printf("Impossible d'ouvrir le fichier %s\n", chemin);
+        couple.chaine = NULL;
+        couple.longueur = 0;
+        return couple;
+    }
+
+    // Obtient la taille du fichier
+    fseek(fich, 0, SEEK_END); // Déplace le curseur à la fin du fichier
+    long tailleFich = ftell(fich); // Récupère la position du curseur (qui est la taille du fichier)
+    fseek(fich, 0, SEEK_SET); // Remet le curseur au début du fichier
+    printf("longueur via fichier : %ld \n", tailleFich);
+
+    // Alloue dynamiquement de la mémoire pour stocker le contenu du fichier
+    char* contenu = (char*)malloc(tailleFich); // Ajoute 1 pour le caractère de fin de chaîne
+    if (contenu == NULL) {
+        printf("Erreur lors de l'allocation de mémoire\n");
+        fclose(fich);
+        couple.chaine = NULL;
+        couple.longueur = 0;
+        return couple;
+    }
+
+    // Lit le contenu du fichier dans le tampon
+    size_t bytesLus = fread(contenu, 1, tailleFich, fich);
+    printf("longueur lue via fichier : %zu \n", bytesLus);
+    if (bytesLus != tailleFich) {
+        printf("Erreur lors de la lecture du fichier\n");
+        free(contenu);
+        fclose(fich);
+        couple.chaine = NULL;
+        couple.longueur = 0;
+        return couple;
+    }
+    contenu[bytesLus] = '\0'; // Ajoute le caractère de fin de chaîne
+
+    // Attribution des valeurs à la structure CoupleBinLong
+    couple.chaine = contenu;
+    couple.longueur = bytesLus;
+
+    // Affichage de chaque caractère du contenu
+    //printf("Contenu du fichier :\n");
+    for (size_t i = 0; i < bytesLus; ++i) {
+        //printf("%c", contenu[i]);
+    }
+    //printf("\n");
+
+    fclose(fich);
+    return couple;
+}
 
 // Fonction pour lire le fichier .txt et compléter la liste chaînée
 void lireTxt(const char* fichier, DictionnaireFreq** dict) {
@@ -16,29 +81,42 @@ void lireTxt(const char* fichier, DictionnaireFreq** dict) {
 
     char ligne[2048];
     while (fgets(ligne, sizeof(ligne), fich) != NULL) {
-        char* cle = strtok(ligne, " ");
-        char* valeur = strtok(NULL, "\n");
+        char* valeur = NULL;
+        // Trouver la position du début de la valeur après le dernier espace de la clé
+        for (int i = 0; i < strlen(ligne); i++) {
+            if (ligne[i] == ' ' && ligne[i + 1] != ' ' && ligne[i + 1] != '\n' && ligne[i + 1] != '\0') {
+                valeur = &ligne[i + 1];
+                ligne[i] = '\0'; // End the key string here
+                break;
+            }
+        }
 
-        if (cle && valeur) {
+        char* cle = ligne;
+        if (valeur) {
+            // Remove potential newline from the end of valeur
+            char* newline = strchr(valeur, '\n');
+            if (newline) {
+                *newline = '\0';
+            }
+
+            //if (strcmp(cle, "Saut") == 0) {
+            //    cle = "\n";  // Replace "Saut" with newline
+            //}
+
             DictionnaireFreq* newEntry = malloc(sizeof(DictionnaireFreq));
             if (newEntry) {
                 newEntry->cle = strdup(cle);
                 newEntry->valeur = strdup(valeur);
-                if (!newEntry->cle || !newEntry->valeur) {  // Vérification pour strdup en échec
-                    free(newEntry->cle);
-                    free(newEntry->valeur);
-                    free(newEntry);
-                } else {
-                    newEntry->suiv = *dict;
-                    *dict = newEntry;
-                }
+                newEntry->suiv = *dict;
+                *dict = newEntry;
+            } else {
+                fprintf(stderr, "Memory allocation failed for new dictionary entry.\n");
             }
         }
     }
 
     fclose(fich);
 }
-
 // Fonction pour libérer dynamiquement la mémoire allouée pour la liste chainée
 void libererDictionnaireFreq(DictionnaireFreq* dict) {
     while (dict) {
@@ -53,39 +131,7 @@ void libererDictionnaireFreq(DictionnaireFreq* dict) {
     /*********************************************************************************/
 
 
-    // Fonction pour lire le fichier .bin compressé
-char * lireBin (const char* fichier){
-    // Stockage chemin
-    char chemin[512];
-    snprintf(chemin, sizeof(chemin), "%s%s", "../../../Data/Compressed_data/", fichier);
-    FILE* fich = fopen(chemin, "rb"); // Ouverture du fichier en mode binaire
-    /*********************************************************************************/
-    // Si fichier inexistant :
-    if (fich == NULL) {
-        printf("Impossible d'ouvrir le fichier %s\n", chemin);
-        return NULL;
-    }
-    /*********************************************************************************/
-    // Obtient la taille du fichier
-    fseek(fich, 0, SEEK_END); // Déplace le curseur à la fin du fichier
-    long tailleFich = ftell(fich); // Récupère la position du curseur (qui est la taille du fichier)
-    fseek(fich, 0, SEEK_SET); // Remet le curseur au début du fichier
 
-    // Alloue dynamiquement de la mémoire pour stocker le contenu du fichier
-    char* ligne = (char*)malloc(tailleFich + 1); // Ajoute 1 pour le caractère de fin de chaîne
-    if (ligne == NULL) {
-        printf("Erreur lors de l'allocation de mémoire\n");
-        fclose(fich);
-        return NULL;
-    }
-
-    // Lit le contenu du fichier dans le tampon
-    size_t lireOctet = fread(ligne, 1, tailleFich, fich);
-    ligne[lireOctet] = '\0'; // Ajoute le caractère de fin de chaîne
-    fclose(fich);
-
-    return ligne;
-}
 
 
 /*********************************************************************/
@@ -201,3 +247,14 @@ void ajouterElement(DictionnaireFreq **tete, const char *cle, const char *valeur
     *tete = nouveau;
 }
 
+
+
+// Fonction pour vérifier la longueur d'une chaîne de caractères
+int longueurChaine(const char* chaine) {
+    int longueur = 0;
+    // Parcours de la chaîne jusqu'à rencontrer le caractère de fin de chaîne ('\0')
+    while (chaine[longueur] != '\0') {
+        longueur++; // Incrémentation de la longueur pour chaque caractère non nul
+    }
+    return longueur; // Retourne la longueur de la chaîne
+}
