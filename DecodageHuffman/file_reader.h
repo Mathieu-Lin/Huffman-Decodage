@@ -12,7 +12,7 @@ typedef struct DictionnaireFreq {
 
 // Structure pour avoir un couple bin + longueur.
 typedef struct CoupleBinLong {
-    unsigned char* chaine; // une chaine des caractères
+    char* chaine; // une chaine des caractères
     size_t longueur; // longueur d'une chaine des caractères
 } CoupleBinLong;
 

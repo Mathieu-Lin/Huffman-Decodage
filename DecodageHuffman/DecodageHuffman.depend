@@ -5,12 +5,12 @@
 	<string.h>
 	"file_reader.h"
 
-1714040026 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.h
+1714044162 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1714041325 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\main.c
+1714042820 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\main.c
 	<stdio.h>
 	<stdlib.h>
 	"file_reader.h"

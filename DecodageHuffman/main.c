@@ -6,6 +6,7 @@
 #include "encodage.h"
 #include "file_logger.h"
 
+// Il manque alice.txt ne fonctionne pas donc corriger la partie lecture du .txt, problème de saut de ligne .
 // Sources : Connaissances du module INFO403 du PEIP2-INFO de l'USMB (Université Savoie Mont Blanc). 2022-2023
 // IDE utilisé : CodeBlock
 int main() {
@@ -17,7 +18,7 @@ int main() {
     // Lecture des restes des bits
     char reste[128]; // Assumant une taille maximale pour la chaîne restante
     reste[0] = '\0'; // Initialise la chaîne restante à une chaîne vide
-    char *resultatRest = lireTxtRest("ok_bits.txt", reste);
+    char *resultatRest = lireTxtRest("bonjour_bits.txt", reste);
     printf("Contenu du fichier texte : %s\n", resultatRest);
 
 
@@ -25,7 +26,7 @@ int main() {
     DictionnaireFreq *dict = NULL;
 
     // Lecture du fichier .txt
-    lireTxt("ok_freq.txt", &dict);
+    lireTxt("bonjour_freq.txt", &dict);
 
 
     // Affichage du dictionnaire
@@ -60,7 +61,7 @@ int main() {
     /* PARTIE 3 :  Décodage du texte comprimé */
     /*********************************************************************************************/
     // Lecture fichier .bin
-    CoupleBinLong couple = lireBin("ok_comp.bin");
+    CoupleBinLong couple = lireBin("bonjour_comp.bin");
     // Si la lecture est un succès,
     if (couple.chaine != NULL) {
         // Il annonce la longueur du fichier
@@ -222,7 +223,7 @@ int main() {
     /* PARTIE 3 : Décodage du texte comprimé  */
     /*********************************************************************************************/
         // Lecture fichier .bin
-        CoupleBinLong couple = lireBin("bonjour_comp.bin");
+        CoupleBinLong couple = lireBin(nomFichierBin);
         if (couple.chaine != NULL) {
             // Affichage de la longueur du fichier .bin
             printf("La longueur de la chaine est : %zu\n", couple.longueur);
