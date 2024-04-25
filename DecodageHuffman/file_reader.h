@@ -5,15 +5,15 @@
 #include <string.h>
 // Structure pour une paire de clé-valeur sous une liste chainée
 typedef struct DictionnaireFreq {
-    char* cle;
-    char* valeur;
-    struct DictionnaireFreq *suiv;
+    char* cle;   // une caractère ou un spécifique (Saut)
+    char* valeur; // une fréquence
+    struct DictionnaireFreq *suiv; // le suivant
 } DictionnaireFreq;
 
 // Structure pour avoir un couple bin + longueur.
 typedef struct CoupleBinLong {
-    char* chaine;
-    size_t longueur;
+    char* chaine; // une chaine des caractères
+    size_t longueur; // longueur d'une chaine des caractères
 }CoupleBinLong;
 
 
@@ -24,10 +24,10 @@ void lireTxt (const char* fichier, DictionnaireFreq** dict);
 // Fonction pour lire un fichier binaire
 CoupleBinLong lireBin(const char* fichier);
 
-/** GestionDico **/
 // Fonction pour libérer la mémoire allouée pour la liste chainée
 void libererDictionnaireFreq(DictionnaireFreq* dict);
 
+/** GestionDico **/
 // Fonction pour échanger les données de deux DictionnaireFreq
 void echangerDictionnaireFreq(DictionnaireFreq *a, DictionnaireFreq *b);
 
@@ -46,6 +46,7 @@ void retirerPremier(DictionnaireFreq **tete);
 // Fonction pour ajouter un élément dans la liste chainée
 void ajouterElement(DictionnaireFreq **tete, const char *cle, const char *valeur);
 
+// Fonction pour vérifier la longueur d'une chaîne de caractères
 int longueurChaine(const char* chaine);
 #endif
 

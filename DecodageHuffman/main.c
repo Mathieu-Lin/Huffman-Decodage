@@ -54,20 +54,25 @@ int main() {
     /*********************************************************************************************/
     // Lecture fichier .bin
     CoupleBinLong couple = lireBin("bonjour_comp.bin");
+    // Si la lecture est un succès,
     if (couple.chaine != NULL) {
+        // Il annonce la longueur du fichier
         printf("La longueur de la chaine est : %zu\n", couple.longueur);
 
         // Afficher chaque caractère de la chaîne de caractères binaire
         printf("Fichier binaire : ");
         // Convertir la chaîne binaire en une chaîne de caractères
         char* binaire = stringToBinary(couple.chaine,couple.longueur);
+        // Affichage des octets dont le fichier .bin contient
         for (size_t i = 0; i < couple.longueur; ++i) {
             printf("%c", couple.chaine[i]);
         }
+        // Affichage des bits provenant des octets
         printf(" \n %s", binaire);
         printf("\n");
         // Décoder la chaîne binaire en utilisant l'arbre de Huffman
         //printf("Texte décodé : \n");
+        // Transformation vers une chaine des caractères non compressé
         char* resultat = decoderHuffman(racineArbre, binaire);
         //printf("Chaîne décodée : \n%s\n", resultat);
 
@@ -78,14 +83,14 @@ int main() {
         /*********************************************************************************************/
         /* PARTIE 4 :  Détermination du taux de compression */
         /*********************************************************************************************/
-        // Affichage du résultat
+        // Variables de taille dont initiale est le fichier .bin et finale est le fichier décompressé
         long int tailleInitiale = couple.longueur;
         long int tailleFinale = strlen(resultat);
 
         // Calcul du taux de compression
         double tauxCompression = (1.0 - ((double)tailleFinale / (double)tailleInitiale)) * 100.0;
 
-        // Affichage du résultat
+        // Affichage du résultat des tailles et le taux de compression (dans ce cas, il est négatif)
         printf("Taille initiale : %ld octets\n", tailleInitiale);
         printf("Taille finale : %ld octets\n", tailleFinale);
         printf("Taux de compression : %.2f%%\n", tauxCompression);
@@ -93,11 +98,13 @@ int main() {
         /*********************************************************************************************/
         /* PARTIE 5 :   Détermination du nombre moyen de bits de stockage d’un caractère du texte compressé*/
         /*********************************************************************************************/
+        // Variable pour la valeur réelle moyenne
         double nombreMoyenBitsParCaractere;
 
         // Calcul du nombre moyen de bits par caractère
         nombreMoyenBitsParCaractere = (double)tailleFinale / tailleInitiale;
 
+        // Affichage du résultat de la moyenne
         printf("Nombre moyen de bits par caractère dans le texte compressé : %.2f\n", nombreMoyenBitsParCaractere);
 
         // Libérer la mémoire allouée pour la chaîne binaire
@@ -111,11 +118,17 @@ int main() {
     /* PARTIE 6 :  Echange entre utilisateur et programme */
     /*********************************************************************************************/
 
+    // Variables que l'utilisateur va entrer
     char nomFichier[100];
     char nomFichierBin[100];
     char nomEnreg[100];
     char choix;
+
+    // Boucle while
     do {
+    /*********************************************************************************************/
+    /* PARTIE 0 : Demande aux utilisateurs */
+    /*********************************************************************************************/
         // Demande à l'utilisateur d'entrer le nom du fichier.txt
         printf("Entrez le nom du fichier comme nomFichier.txt (s pour sortir) : ");
         scanf("%99s", nomFichier);
@@ -145,6 +158,9 @@ int main() {
             break;
         }
 
+    /*********************************************************************************************/
+    /* PARTIE 1 : Récupération des données */
+    /*********************************************************************************************/
         // Debut du décodage
         // Création d'un dictionnaire de fréquences
         DictionnaireFreq *dict = NULL;
@@ -158,7 +174,9 @@ int main() {
         //printf("\nListe après le tri à bulles par ordre croissant :\n");
         afficherListe(dict);
 
-        printf("\n//////////////////////\n");
+    /*********************************************************************************************/
+    /* PARTIE 2 : Construction de l’arbre de Huffman */
+    /*********************************************************************************************/
 
         // Convertir le dictionnaire de fréquences en une liste de nœuds
         List_Node *listeNoeuds = convertirEnListeNode(dict);
@@ -171,15 +189,20 @@ int main() {
         printf("\nArbre de Huffman :\n");
         afficherArbre(racineArbre, 0);
 
+    /*********************************************************************************************/
+    /* PARTIE 3 : Décodage du texte comprimé  */
+    /*********************************************************************************************/
         // Lecture fichier .bin
         CoupleBinLong couple = lireBin("bonjour_comp.bin");
         if (couple.chaine != NULL) {
+            // Affichage de la longueur du fichier .bin
             printf("La longueur de la chaine est : %zu\n", couple.longueur);
 
             // Afficher chaque caractère de la chaîne de caractères binaire
             printf("Fichier binaire : ");
             // Convertir la chaîne binaire en une chaîne de caractères
             char* binaire = stringToBinary(couple.chaine,couple.longueur);
+            // Affichage du contenu du fichier .bin (utilisé seulement pour tester)
             for (size_t i = 0; i < couple.longueur; ++i) {
                 //printf("%c", couple.chaine[i]);
             }
@@ -187,24 +210,25 @@ int main() {
             printf("\n");
             // Décoder la chaîne binaire en utilisant l'arbre de Huffman
             //printf("Texte décodé : \n");
+            // Transformation vers une chaine des caractères décompressé
             char* resultat = decoderHuffman(racineArbre, binaire);
             //printf("Chaîne décodée : \n%s\n", resultat);
 
             // Enregistrer le résultat décodé dans un fichier
-            enregistrerResultat(resultat, "bonjour.txt");
+            enregistrerResultat(resultat,nomEnreg );
 
 
             /*********************************************************************************************/
             /* PARTIE 4 :  Détermination du taux de compression */
             /*********************************************************************************************/
-            // Affichage du résultat
+            // Variables pour les longueurs dont l'initiale grâce fichier.bin et l'autre grâce au fichier.txt décompressé.
             long int tailleInitiale = couple.longueur;
             long int tailleFinale = strlen(resultat);
 
             // Calcul du taux de compression
             double tauxCompression = (1.0 - ((double)tailleFinale / (double)tailleInitiale)) * 100.0;
 
-            // Affichage du résultat
+            // Affichage du résultat des tailles et du taux de compression (négatif vue de la décompression)
             printf("Taille initiale : %ld octets\n", tailleInitiale);
             printf("Taille finale : %ld octets\n", tailleFinale);
             printf("Taux de compression : %.2f%%\n", tauxCompression);
@@ -212,23 +236,28 @@ int main() {
             /*********************************************************************************************/
             /* PARTIE 5 :   Détermination du nombre moyen de bits de stockage d’un caractère du texte compressé*/
             /*********************************************************************************************/
+            // Variable moyenne de valeur réelle
             double nombreMoyenBitsParCaractere;
 
             // Calcul du nombre moyen de bits par caractère
             nombreMoyenBitsParCaractere = (double)tailleFinale / tailleInitiale;
 
+            // Affichage du résultat du moyenne
             printf("Nombre moyen de bits par caractère dans le texte compressé : %.2f\n", nombreMoyenBitsParCaractere);
 
             // Libérer la mémoire allouée pour la chaîne binaire
             free(binaire);
             // Libérer la mémoire allouée pour la chaîne dans la structure CoupleBinLong
             free(couple.chaine);
+            free(resultat);
         } else {
             printf("Erreur lors de la lecture du fichier.\n");
         }
 
 
-
+            /*********************************************************************************************/
+            /* PARTIE FIN :  Demande à l'utilisateur */
+            /*********************************************************************************************/
 
 
         // Demande à l'utilisateur s'il souhaite continuer
@@ -237,6 +266,7 @@ int main() {
 
         } while (choix != 's');
 
+    // FIN du programme
     return 0;
 }
 

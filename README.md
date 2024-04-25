@@ -46,6 +46,7 @@ Pour voir plus de détails, ouvrir mon diaporama.
 ## Développement
 
 Ce programme a été développé en C.
+IDE : CodeBlocks (voir sur son site web : https://www.codeblocks.org/downloads/ )
 
 ## Auteur
 

@@ -7,44 +7,44 @@
 /** Creation d'un noeud **/
 // Créer un nœud de l'arbre de Huffman
 Node *creerNode(char lettre, int freq) {
-    Node *nouvNode = (Node *)malloc(sizeof(Node));
+    Node *nouvNode = (Node *)malloc(sizeof(Node)); // Mémoire allouée en bloc avec la taille de la structure dont si malloc(10) alors bloc de 10 octets
     if (nouvNode != NULL) {
-        nouvNode->lettre = lettre;
-        nouvNode->freq = freq;
-        nouvNode->left = NULL;
-        nouvNode->right = NULL;
-        nouvNode->speciale = NULL; //Initialise le code binaire à NULL
+        nouvNode->lettre = lettre;  //Initialise le lettre
+        nouvNode->freq = freq;   //Initialise le frequence des caractères
+        nouvNode->left = NULL;   ////Initialise le fils gauche à NULL
+        nouvNode->right = NULL;  //Initialise le fils droit à NULL
+        nouvNode->speciale = NULL; //Initialise le speciale à NULL
     }
     return nouvNode;
 }
 
 // Créer un nœud de l'arbre de Huffman avec les nœuds gauche et droit
 Node *creerNode2(char lettre, int freq, Node *gauche, Node *droite) {
-    Node *nouvNode = (Node *)malloc(sizeof(Node));
+    Node *nouvNode = (Node *)malloc(sizeof(Node));  // Mémoire allouée en bloc avec la taille de la structure
     if (nouvNode != NULL) {
-        nouvNode->lettre = lettre;
-        nouvNode->freq = freq;
-        nouvNode->left = gauche;
-        nouvNode->right = droite;
-        nouvNode->speciale = NULL; // Initialise le code binaire à NULL
+        nouvNode->lettre = lettre;  //Initialise le lettre
+        nouvNode->freq = freq;  //Initialise le frequence des caractères
+        nouvNode->left = gauche;        //Initialise le fils gauche
+        nouvNode->right = droite;   //Initialise le fils droit
+        nouvNode->speciale = NULL; // Initialise le speciale à NULL
     }
     return nouvNode;
 }
 
-// Créer un nœud de l'arbre de Huffman
+// Créer un nœud de l'arbre de Huffman avec speciale
 Node *creerNode3(char lettre, int freq, char speciale) {
-    Node *nouvNode = (Node *)malloc(sizeof(Node));
+    Node *nouvNode = (Node *)malloc(sizeof(Node)); // Mémoire allouée en bloc avec la taille de la structure
     if (nouvNode != NULL) {
-        nouvNode->lettre = lettre;
-        nouvNode->freq = freq;
-        nouvNode->left = NULL;
-        nouvNode->right = NULL;
-        nouvNode->speciale = speciale;
+        nouvNode->lettre = lettre;  //Initialise le lettre
+        nouvNode->freq = freq;  //Initialise le frequence des caractères
+        nouvNode->left = NULL;  //Initialise le fils gauche à NULL
+        nouvNode->right = NULL; //Initialise le fils droit
+        nouvNode->speciale = speciale; // Initialise le speciale à NULL
     }
     return nouvNode;
 }
 
-// Créer un nœud de l'arbre de Huffman avec les nœuds gauche et droit
+// Créer un nœud de l'arbre de Huffman avec les nœuds gauche et droit et speciale
 Node *creerNode4(char lettre, int freq, Node *gauche, Node *droite, char speciale) {
     Node *nouvNode = (Node *)malloc(sizeof(Node));
     if (nouvNode != NULL) {
@@ -60,7 +60,9 @@ Node *creerNode4(char lettre, int freq, Node *gauche, Node *droite, char special
 /** Gestion d'une liste chainée des noeuds **/
 // Fonction pour convertir DictionnaireFreq en List_Node
 List_Node *convertirEnListeNode(DictionnaireFreq *dict) {
+    // Liste en Tete
     List_Node *teteListe = NULL;
+    // Reste de la liste
     List_Node *dernier = NULL;
 
     // Parcourir la liste DictionnaireFreq
@@ -70,11 +72,11 @@ List_Node *convertirEnListeNode(DictionnaireFreq *dict) {
         if (nouveauNode != NULL) {
             // Copier les données de DictionnaireFreq vers List_Node
             if (strcmp(dict->cle, "Saut") == 0) {
-                nouveauNode->node.lettre = 'W';  // Si la clé est "Saut", utiliser '\n' comme caractère
-                nouveauNode->node.speciale = 'S';
+                nouveauNode->node.lettre = 'W';  // Si la clé est "Saut", utiliser 'W' comme caractère
+                nouveauNode->node.speciale = 'S'; // Si la clé est "Saut", utiliser 'S' comme specifique
             } else {
                 nouveauNode->node.lettre = *(dict->cle);  // Sinon, utiliser la première lettre comme caractère
-                nouveauNode->node.speciale = '\0';
+                nouveauNode->node.speciale = '\0'; // Pas de specifique
             }
 
             // Convertir la valeur de la fréquence en entier

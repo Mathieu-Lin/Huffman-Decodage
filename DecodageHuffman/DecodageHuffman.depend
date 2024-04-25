@@ -1,16 +1,16 @@
 # depslib dependency file v1.0
-1713915262 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.c
+1713995854 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"file_reader.h"
 
-1713910912 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.h
+1713995684 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_reader.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1713956966 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\main.c
+1714002188 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\main.c
 	<stdio.h>
 	<stdlib.h>
 	"file_reader.h"
@@ -19,32 +19,32 @@
 	"encodage.h"
 	"file_logger.h"
 
-1713913469 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.c
+1713999157 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.c
 	"node.h"
 	"file_reader.h"
 	"list_node.h"
 	<stdio.h>
 	<stdlib.h>
 
-1713955053 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.h
+1713994898 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\node.h
 
 1713526371 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\list_node.h
 
-1713911649 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\encodage.h
+1713996138 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\encodage.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1713957690 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\encodage.c
+1714004448 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\encodage.c
 	"node.h"
 	"encodage.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1713831989 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_logger.h
+1713996214 c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_logger.h
 
-1713832054 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_logger.c
+1713996216 source:c:\users\xizhi\downloads\proj631\decodage_huffman\huffman-decodage\decodagehuffman\file_logger.c
 	<stdio.h>
 	"file_logger.h"
 

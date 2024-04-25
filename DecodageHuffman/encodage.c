@@ -22,7 +22,7 @@ char* charToBinary(char c) {
 // Fonction pour convertir une chaîne de caractères en une chaîne binaire
 char* stringToBinary(char* str, size_t longueur) {
     size_t len = longueur;
-    char* binaryString = (char*)malloc((len * 8 + 1) * sizeof(char)); // Chaque caractère est représenté sur 8 bits, +1 pour le caractère de fin de chaîne
+    char* binaryString = (char*)malloc((len * 8 +1 ) * sizeof(char)); // Chaque caractère est représenté sur 8 bits, +1 pour le caractère de fin de chaîne
     if (binaryString == NULL) {
         perror("Erreur d'allocation de mémoire");
         exit(EXIT_FAILURE);

@@ -86,21 +86,21 @@ void lireTxt(const char* fichier, DictionnaireFreq** dict) {
         for (int i = 0; i < strlen(ligne); i++) {
             if (ligne[i] == ' ' && ligne[i + 1] != ' ' && ligne[i + 1] != '\n' && ligne[i + 1] != '\0') {
                 valeur = &ligne[i + 1];
-                ligne[i] = '\0'; // End the key string here
+                ligne[i] = '\0'; // Finalisation de la chaine
                 break;
             }
         }
 
         char* cle = ligne;
         if (valeur) {
-            // Remove potential newline from the end of valeur
+            // Supprimer la newline de la fin de la valeur
             char* newline = strchr(valeur, '\n');
             if (newline) {
                 *newline = '\0';
             }
 
             //if (strcmp(cle, "Saut") == 0) {
-            //    cle = "\n";  // Replace "Saut" with newline
+            //    cle = "\n";  // Remplace "Saut" avec newline
             //}
 
             DictionnaireFreq* newEntry = malloc(sizeof(DictionnaireFreq));
@@ -110,7 +110,7 @@ void lireTxt(const char* fichier, DictionnaireFreq** dict) {
                 newEntry->suiv = *dict;
                 *dict = newEntry;
             } else {
-                fprintf(stderr, "Memory allocation failed for new dictionary entry.\n");
+                fprintf(stderr, "Echec d'allocation du mémoire.\n");
             }
         }
     }

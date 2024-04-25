@@ -7,18 +7,23 @@ typedef struct Node {
     int freq;             // Fréquence du caractère
     struct Node *left;    // Pointeur vers le sous-arbre gauche
     struct Node *right;   // Pointeur vers le sous-arbre droit
-    char speciale;
+    char speciale;        // Caractère spécifique comme s pour les sauts de lignes
 } Node;
 
+// Structure pour une liste chainée des noeuds
 typedef struct List_Node{
-    Node node;
-    struct List_Node *suiv;
+    Node node;          // Noeud
+    struct List_Node *suiv; // Liste suivante
 } List_Node;
 
 // Créer un nœud de l'arbre de Huffman
 Node *creerNode(char lettre, int freq);
+// Créer un nœud de l'arbre de Huffman avec les nœuds gauche et droit
 Node *creerNode2(char lettre, int freq, Node *gauche, Node *droite);
-
+// Créer un nœud de l'arbre de Huffman avec speciale
+Node *creerNode3(char lettre, int freq, char speciale);
+// Créer un nœud de l'arbre de Huffman avec les nœuds gauche et droit et speciale
+Node *creerNode4(char lettre, int freq, Node *gauche, Node *droite, char speciale);
 
 // Fonction pour échanger les données de deux nœuds
 void echangerNodes(List_Node *a, List_Node *b);
@@ -38,6 +43,7 @@ Node *buildTree(List_Node *liste);
 // Fonction qui permet d'afficher un arbre en récursif
 void afficherArbre(Node *racine, int niveau);
 
-void afficherListeNodes(List_Node *tete);
+// Fonction pour afficher les éléments de la liste chaînée
+void afficherListeNodes(List_Node *tete) ;
 
 #endif
