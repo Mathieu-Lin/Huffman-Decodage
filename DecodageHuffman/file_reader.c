@@ -32,7 +32,7 @@ CoupleBinLong lireBin(const char* fichier) {
     printf("longueur via fichier : %ld \n", tailleFich);
 
     // Alloue dynamiquement de la mémoire pour stocker le contenu du fichier
-    char* contenu = (char*)malloc(tailleFich); // Ajoute 1 pour le caractère de fin de chaîne
+    unsigned char* contenu = (unsigned char*)malloc(tailleFich); // Ajoute 1 pour le caractère de fin de chaîne
     if (contenu == NULL) {
         printf("Erreur lors de l'allocation de mémoire\n");
         fclose(fich);
@@ -42,9 +42,9 @@ CoupleBinLong lireBin(const char* fichier) {
     }
 
     // Lit le contenu du fichier dans le tampon
-    size_t bytesLus = fread(contenu, 1, tailleFich, fich);
+    size_t bytesLus = fread(contenu, sizeof(unsigned char), tailleFich, fich);
     printf("longueur lue via fichier : %zu \n", bytesLus);
-    if (bytesLus != tailleFich) {
+    if (bytesLus == 0) {
         printf("Erreur lors de la lecture du fichier\n");
         free(contenu);
         fclose(fich);
@@ -52,23 +52,14 @@ CoupleBinLong lireBin(const char* fichier) {
         couple.longueur = 0;
         return couple;
     }
-    contenu[bytesLus] = '\0'; // Ajoute le caractère de fin de chaîne
 
     // Attribution des valeurs à la structure CoupleBinLong
     couple.chaine = contenu;
     couple.longueur = bytesLus;
 
-    // Affichage de chaque caractère du contenu
-    //printf("Contenu du fichier :\n");
-    for (size_t i = 0; i < bytesLus; ++i) {
-        //printf("%c", contenu[i]);
-    }
-    //printf("\n");
-
     fclose(fich);
     return couple;
 }
-
 // Fonction pour lire le fichier .txt et compléter la liste chaînée
 void lireTxt(const char* fichier, DictionnaireFreq** dict) {
     char chemin[512];
@@ -116,6 +107,27 @@ void lireTxt(const char* fichier, DictionnaireFreq** dict) {
     }
 
     fclose(fich);
+}
+
+// Fonction qui lit le fichier .txt et complète pour reste (il sert à completer les bits inférieur à 8 bits)
+char* lireTxtRest(const char* fichier, char *reste) {
+    char chemin[512];
+    snprintf(chemin, sizeof(chemin), "%s%s", "../../../Data/Compressed_data/", fichier);
+    FILE* fich = fopen(chemin, "r");
+
+    if (fich == NULL) {
+        printf("Impossible d'ouvrir le fichier %s\n", chemin);
+        return reste;
+    }
+
+    char ligne[256]; // Assumant que chaque ligne fait au maximum 255 caractères
+    while (fgets(ligne, sizeof(ligne), fich) != NULL) {
+        // Concaténez chaque ligne à la chaîne existante
+        strcat(reste, ligne);
+    }
+
+    fclose(fich);
+    return reste;
 }
 // Fonction pour libérer dynamiquement la mémoire allouée pour la liste chainée
 void libererDictionnaireFreq(DictionnaireFreq* dict) {

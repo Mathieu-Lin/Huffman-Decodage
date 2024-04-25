@@ -14,12 +14,19 @@ int main() {
     /*********************************************************************************************/
     /* PARTIE 1 : Récupération des données */
     /*********************************************************************************************/
+    // Lecture des restes des bits
+    char reste[128]; // Assumant une taille maximale pour la chaîne restante
+    reste[0] = '\0'; // Initialise la chaîne restante à une chaîne vide
+    char *resultatRest = lireTxtRest("ok_bits.txt", reste);
+    printf("Contenu du fichier texte : %s\n", resultatRest);
+
 
     // Création d'un dictionnaire de fréquences
     DictionnaireFreq *dict = NULL;
 
     // Lecture du fichier .txt
-    lireTxt("bonjour_freq.txt", &dict);
+    lireTxt("ok_freq.txt", &dict);
+
 
     // Affichage du dictionnaire
     //afficherListe(dict);
@@ -53,7 +60,7 @@ int main() {
     /* PARTIE 3 :  Décodage du texte comprimé */
     /*********************************************************************************************/
     // Lecture fichier .bin
-    CoupleBinLong couple = lireBin("bonjour_comp.bin");
+    CoupleBinLong couple = lireBin("ok_comp.bin");
     // Si la lecture est un succès,
     if (couple.chaine != NULL) {
         // Il annonce la longueur du fichier
@@ -63,6 +70,7 @@ int main() {
         printf("Fichier binaire : ");
         // Convertir la chaîne binaire en une chaîne de caractères
         char* binaire = stringToBinary(couple.chaine,couple.longueur);
+        strcat(binaire, resultatRest);
         // Affichage des octets dont le fichier .bin contient
         for (size_t i = 0; i < couple.longueur; ++i) {
             printf("%c", couple.chaine[i]);
@@ -111,6 +119,10 @@ int main() {
         free(binaire);
         // Libérer la mémoire allouée pour la chaîne dans la structure CoupleBinLong
         free(couple.chaine);
+        free(reste);
+        free(resultatRest);
+        free(resultat);
+
     } else {
         printf("Erreur lors de la lecture du fichier.\n");
     }
@@ -121,6 +133,7 @@ int main() {
     // Variables que l'utilisateur va entrer
     char nomFichier[100];
     char nomFichierBin[100];
+    char nomFichierBits[100];
     char nomEnreg[100];
     char choix;
 
@@ -147,6 +160,15 @@ int main() {
             printf("Sortie du programme.\n");
             break;
         }
+        // Demande à l'utilisateur d'entrer le nom du fichier.bin
+        printf("Entrez le nom du fichier comme nom_Bits.txt (s pour sortir) : ");
+        scanf("%99s", nomFichierBits);
+
+        // Vérifie si l'utilisateur veut sortir
+        if (strcmp(nomFichierBits, "s") == 0) {
+            printf("Sortie du programme.\n");
+            break;
+        }
 
         // Demande à l'utilisateur d'entrer le nom du fichier.bin
         printf("Entrez le nom du fichier comme nomEnreg.txt (s pour sortir) : ");
@@ -158,10 +180,17 @@ int main() {
             break;
         }
 
+
+
     /*********************************************************************************************/
     /* PARTIE 1 : Récupération des données */
     /*********************************************************************************************/
         // Debut du décodage
+        // Lecture des restes des bits
+        char reste[128]; // Assumant une taille maximale pour la chaîne restante
+        reste[0] = '\0'; // Initialise la chaîne restante à une chaîne vide
+        char *resultatRest = lireTxtRest(nomFichierBits, reste);
+        printf("Contenu du fichier texte : %s\n", resultatRest);
         // Création d'un dictionnaire de fréquences
         DictionnaireFreq *dict = NULL;
 
@@ -200,8 +229,12 @@ int main() {
 
             // Afficher chaque caractère de la chaîne de caractères binaire
             printf("Fichier binaire : ");
+
             // Convertir la chaîne binaire en une chaîne de caractères
             char* binaire = stringToBinary(couple.chaine,couple.longueur);
+
+            // Ajout du reste
+            strcat(binaire, resultatRest);
             // Affichage du contenu du fichier .bin (utilisé seulement pour tester)
             for (size_t i = 0; i < couple.longueur; ++i) {
                 //printf("%c", couple.chaine[i]);
@@ -253,16 +286,9 @@ int main() {
         } else {
             printf("Erreur lors de la lecture du fichier.\n");
         }
+        free(reste);
+        free(resultatRest);
 
-
-            /*********************************************************************************************/
-            /* PARTIE FIN :  Demande à l'utilisateur */
-            /*********************************************************************************************/
-
-
-        // Demande à l'utilisateur s'il souhaite continuer
-        printf("Voulez-vous continuer ? (s pour sortir) : ");
-        scanf(" %c", &choix); // L'espace avant %c supprime les caractères blancs restants
 
         } while (choix != 's');
 

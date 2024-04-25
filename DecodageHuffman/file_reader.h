@@ -12,9 +12,9 @@ typedef struct DictionnaireFreq {
 
 // Structure pour avoir un couple bin + longueur.
 typedef struct CoupleBinLong {
-    char* chaine; // une chaine des caractères
+    unsigned char* chaine; // une chaine des caractères
     size_t longueur; // longueur d'une chaine des caractères
-}CoupleBinLong;
+} CoupleBinLong;
 
 
 /** Lecture **/
@@ -23,6 +23,9 @@ void lireTxt (const char* fichier, DictionnaireFreq** dict);
 
 // Fonction pour lire un fichier binaire
 CoupleBinLong lireBin(const char* fichier);
+
+// Fonction qui lit le fichier .txt et complète pour reste (il sert à completer les bits inférieur à 8 bits)
+char* lireTxtRest(const char* fichier, char *reste) ;
 
 // Fonction pour libérer la mémoire allouée pour la liste chainée
 void libererDictionnaireFreq(DictionnaireFreq* dict);
