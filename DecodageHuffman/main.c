@@ -233,12 +233,11 @@ int main() {
 
             // Convertir la chaîne binaire en une chaîne de caractères
             char* binaire = stringToBinary(couple.chaine,couple.longueur);
-
             // Ajout du reste
             strcat(binaire, resultatRest);
             // Affichage du contenu du fichier .bin (utilisé seulement pour tester)
             for (size_t i = 0; i < couple.longueur; ++i) {
-                //printf("%c", couple.chaine[i]);
+                printf("%c", couple.chaine[i]);
             }
             //printf(" \n %s", binaire);
             printf("\n");
@@ -246,6 +245,7 @@ int main() {
             //printf("Texte décodé : \n");
             // Transformation vers une chaine des caractères décompressé
             char* resultat = decoderHuffman(racineArbre, binaire);
+
             //printf("Chaîne décodée : \n%s\n", resultat);
 
             // Enregistrer le résultat décodé dans un fichier

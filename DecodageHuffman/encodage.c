@@ -41,7 +41,7 @@ char* stringToBinary(char* str, size_t longueur) {
 char* decoderHuffman(Node* racine, char* binaire) {
     Node* courant = racine;
     int i = 0;
-    char* resultat = (char*)malloc(sizeof(char) * (strlen(binaire) + 1)); // Allouer de la mémoire pour le résultat
+    char* resultat = (char*)malloc(sizeof(char) * (strlen(binaire) + 1)); // Allouer de la mémoire pour le résultat // à debugger
     int index = 0;
     while (binaire[i] != '\0') {
         if (binaire[i] == '0') {

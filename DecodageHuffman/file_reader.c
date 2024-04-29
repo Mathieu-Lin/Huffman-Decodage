@@ -125,7 +125,6 @@ char* lireTxtRest(const char* fichier, char *reste) {
         // Concaténez chaque ligne à la chaîne existante
         strcat(reste, ligne);
     }
-
     fclose(fich);
     return reste;
 }
